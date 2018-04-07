@@ -6,6 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import PaymentsScreen from '../screens/PaymentsScreen';
+import RequestsScreen from '../screens/RequestsScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -13,6 +14,9 @@ export default TabNavigator(
   {
     Payments: {
       screen: PaymentsScreen,
+    },
+    Requests: {
+      screen: RequestsScreen,
     },
     Contacts: {
       screen: ContactsScreen,
@@ -32,6 +36,9 @@ export default TabNavigator(
               Platform.OS === 'ios'
                 ? `ios-cash${focused ? '' : '-outline'}`
                 : 'md-cash';
+            break;
+          case 'Requests':
+          iconName = Platform.OS === 'ios' ? `ios-cloud-upload${focused ? '' : '-outline'}` : 'md-cloud-upload';
             break;
           case 'Contacts':
             iconName = Platform.OS === 'ios' ? `ios-contacts${focused ? '' : '-outline'}` : 'md-contacts';
