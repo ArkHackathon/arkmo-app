@@ -3,6 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
+import { Provider } from 'react-redux'
+
 
 export default class App extends React.Component {
   state = {
@@ -10,22 +12,22 @@ export default class App extends React.Component {
   };
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <RootNavigation />
-        </View>
-      );
-    }
+    return (
+      <Provider store = {store}>
+        {(!this.state.isLoadingComplete && !this.props.skipLoadingScreen)? (
+          <AppLoading
+            startAsync={this._loadResourcesAsync}
+            onError={this._handleLoadingError}
+            onFinish={this._handleFinishLoading}
+          />
+        ) : (
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <RootNavigation />
+          </View>
+        )}
+      </Provider>
+    )
   }
 
   _loadResourcesAsync = async () => {
