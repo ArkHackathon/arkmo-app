@@ -24,9 +24,9 @@ function getDescription(address,source, source_name, target, target_name,directi
 	} else if(status == 'pending'){
 		if(target == address){
 			if(direction = 'forward'){
-				ret = target_name + ' is paying You'
+				ret = source_name + ' is paying You'
 			} else {
-				ret = target_name + ' is charging You'
+				ret = source_name + ' is charging You'
 			}
 		} else {
 			if(direction = 'forward'){
@@ -50,7 +50,7 @@ function getDescription(address,source, source_name, target, target_name,directi
 		user: {address,balanceByHash},
 	} = state
 	return {
-		transactions: Object.keys(transactionsById).map(id => {
+		transactions: props.transactions || Object.keys(transactionsById).map(id => {
 			const {
 				hash,
 				block : { 
@@ -75,7 +75,7 @@ function getDescription(address,source, source_name, target, target_name,directi
 				),
 				balance: balanceByHash[hash]
 			}
-		}).filter(tx => tx.description)
+		}).filter(tx => tx.description),
 	}
 })
 
@@ -96,7 +96,7 @@ export default class TransactionList extends Component {
 				        justifyContent: 'center',
 				        alignItems: 'center',
 				      }}>
-				        <View style={{width: '100%', height:1,borderBottomColor:'black',borderBottomWidth:1}} />
+				        <View style={{width: '90%', height:1,borderBottomColor:'skyblue',borderBottomWidth:1}} />
 				      </View>
 					</View>
 				))}
