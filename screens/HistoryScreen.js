@@ -33,7 +33,7 @@ export default class RequestsScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
-
+        <Text>Test!</Text>
         <TransactionList />
         </ScrollView>
 
