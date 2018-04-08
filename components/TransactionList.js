@@ -50,7 +50,7 @@ function getDescription(address,source, source_name, target, target_name,directi
 		user: {address,balanceByHash},
 	} = state
 	return {
-		transactions: Object.keys(transactionsById).map(id => {
+		transactions: props.transactions || Object.keys(transactionsById).map(id => {
 			const {
 				hash,
 				block : { 
@@ -76,7 +76,6 @@ function getDescription(address,source, source_name, target, target_name,directi
 				balance: balanceByHash[hash]
 			}
 		}).filter(tx => tx.description),
-		...props
 	}
 })
 

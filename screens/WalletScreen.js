@@ -13,6 +13,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { ArkDisplay } from '../components/ArkDisplay';
 import TransactionList from '../components/TransactionList'
+import { connect } from 'react-redux'
 
 @connect((state, props) => {
   const {
@@ -39,7 +40,10 @@ import TransactionList from '../components/TransactionList'
     })
   }
 })
-
+export default class WalletScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
   constructor(props){
     super(props);
     this.state = {
