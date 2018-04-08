@@ -38,7 +38,7 @@ export default TabNavigator(
                 : 'md-cash';
             break;
           case 'History':
-          iconName = Platform.OS === 'ios' ? `ios-cloud-upload${focused ? '' : '-outline'}` : 'md-cloud-upload';
+          iconName = Platform.OS === 'ios' ? `ios-calendar${focused ? '' : '-outline'}` : 'md-calendar';
             break;
           case 'Contacts':
             iconName = Platform.OS === 'ios' ? `ios-contacts${focused ? '' : '-outline'}` : 'md-contacts';
