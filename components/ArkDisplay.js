@@ -1,6 +1,10 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 
+import { connect } from 'react-redux'
+@connect((state) => ({
+  balance: state.user.currentBalance, 
+}))
 export class ArkDisplay extends React.Component {
   constructor(props){
     super(props);
@@ -9,7 +13,7 @@ export class ArkDisplay extends React.Component {
     return (
     <View style={styles.container}>
       <Text {...this.props} style={[styles.text,this.props.style]}>
-        Ѧ{this.props.value}
+        Ѧ{this.props.balance}
       </Text>
     </View>
   );

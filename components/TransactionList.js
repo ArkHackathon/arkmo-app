@@ -78,6 +78,8 @@ function getDescription(address,source, source_name, target, target_name,directi
 				address,
 				target_address,
 				hash,
+				amount,
+				direction
 			}
 		}).filter(tx => tx.description),
 	}
@@ -88,17 +90,17 @@ export default class TransactionList extends Component {
 		const { transactions } = this.props
 		return (
 			<View>
-				{transactions.map(({description, balance, status,address, target_address,hash, direction}, i) => (
+				{transactions.map(({amount,description, balance, status,address, target_address,hash, direction}, i) => (
 					<View  key = {i} style= {{marginBottom:10}}>
 						<Transaction 
 							description= {description}
 							balance = {balance}
-
 							status = {status}
 							address = {address}
 							target_address = {target_address}
 							direction = {direction}
 							hash = {hash}
+							amount = {amount}
 						/>
 				      <View style={{
 				        flex: 1,

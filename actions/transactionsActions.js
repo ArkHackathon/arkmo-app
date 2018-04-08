@@ -13,9 +13,9 @@ export const hardUpdateTransaction = (data) => ({
 	payload: {data}
 })
 
-export const finalizeTransaction = (data) => ({
+export const finalizeTransaction = (hash, amount,target_address, direction ) => ({
 	type:'FINALIZE_TRANSACTION',
-	payload: {data},
+	payload: {hash,amount,target_address,direction},
 })
 
 export const removeTransaction = (data) => ({

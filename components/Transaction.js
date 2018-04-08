@@ -3,7 +3,6 @@ import { View, Text, TouchableHighlight } from 'react-native'
 import { MonoText } from '../components/StyledText';
 import { finalizeTransaction, removeTransaction } from '../actions/transactionsActions'
 import { connect } from 'react-redux'
-
 import Swipeout from 'react-native-swipeout';
 // Buttons
 
@@ -13,8 +12,8 @@ export default class Transaction extends Component{
 
 	render(){
 
-		const {hash,dispatch, description, balance, status, address, target_address, direction} = this.props
-		const finalize = () => {dispatch(finalizeTransaction(hash))}
+		const {hash,dispatch, amount, description, balance, status, address, target_address, direction} = this.props
+		const finalize = () => {dispatch(finalizeTransaction(hash, amount, target_address, direction))}
 		const remove = () => {dispatch(removeTransaction(hash))}
 
 		var acceptBtn = [

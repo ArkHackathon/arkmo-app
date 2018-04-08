@@ -1,8 +1,9 @@
 import moment from 'moment'
 const defaultState = {
-	address: 'Fake Address',
+	address: 'bob',
 	name: 'Fake Name',
 	balanceByHash: {},
+	currentBalance: 0,
 	lastTransactionTime: new Date(),
 }
 
@@ -80,6 +81,24 @@ export default function(state = defaultState, {type, payload}){
 				balanceByHash,
 			}
 
+		}
+
+		case 'FINALIZE_TRANSACTION': {
+			let { hash, amount,target_address, direction } = payload
+			if(
+				(target_address == state.address && direction == 'forward') ||
+				(target_address != state.address && direction != 'forward')
+			){
+				amount *= 1
+			} else {
+				amount *=-1
+			}
+
+			const newBalance = state.currentBalance+amount
+			return {
+				...state,
+				currentBalance: newBalance,
+			}
 		}
 
 		default: {

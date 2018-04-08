@@ -100,12 +100,12 @@ export default function(state = defaultState, {type, payload}){
 		}
 
 		case 'FINALIZE_TRANSACTION': {
-			const transaction = state.transactionsById[payload.data]
+			const transaction = state.transactionsById[payload.hash]
 			transaction.status = 'finalized'
 
 			const transactionsById = {
 				...state.transactionsById,
-				[payload.data] : transaction
+				[payload.hash] : transaction
 			}
 			return {
 				...state,
