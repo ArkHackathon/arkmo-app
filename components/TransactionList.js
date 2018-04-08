@@ -35,7 +35,7 @@ function getDescription(address,source, source_name, target, target_name,directi
 			}
 		}
 	} else {
-		return "Uh oh"
+		return false
 	}
 
 	return ret + ' ' + amount + ' Ark'
@@ -80,11 +80,20 @@ export default class TransactionList extends Component {
 		const { transactions } = this.props
 		return (
 			<View>
-				<Text>InnerTest!</Text>
 				{transactions.map(({description}) => (
-					<Transaction 
-						description= {description}
-					/>
+					<View  style= {{marginBottom:10}}>
+						<Transaction 
+							description= {description}
+						/>
+				      <View style={{
+				        flex: 1,
+				        flexDirection: 'column',
+				        justifyContent: 'center',
+				        alignItems: 'center',
+				      }}>
+				        <View style={{width: '100%', height:1,borderBottomColor:'black',borderBottomWidth:1}} />
+				      </View>
+					</View>
 				))}
 			</View>
 		)
