@@ -65,11 +65,11 @@ function getDescription(address,source, source_name, target, target_name,directi
   return {
     transactions: Object.keys(transactionsById).filter(id => {
       const {
-        hash,
         block : { 
           data: {
             source_address, target_address, amount, direction
-          }
+          },
+          hash,
         },
         status,
         source_username,
@@ -79,11 +79,11 @@ function getDescription(address,source, source_name, target, target_name,directi
       return status == 'pending' && target_address == 'bob' && direction == 'forward'
     }).map((id )=> {
       const {
-        hash,
         block : { 
           data: {
             source_address, target_address, amount, direction
-          }
+          },
+          hash,
         },
         status,
         source_username,

@@ -56,7 +56,7 @@ const defaultState = {
 					   "timestamp": "2018-04-07 21:38:51.575147"
 				}, 
 				"previous_hash": "07a96f947536262bbd2ef61bf707ea9f6461188e0126df310c239f712627ce9e", 
-				"hash": "173417c3bdc9c5f1fac5ba88984e50acaed2b8cc1aef71f1e0cd03b1fe5d35e2"
+				"hash": "asdf"
 			}, 
 			"status": "pending", 
 			"source_username": "bob", 
@@ -98,9 +98,37 @@ export default function(state = defaultState, {type, payload}){
 				transactionsById
 			}
 		}
+
+		case 'FINALIZE_TRANSACTION': {
+			const transaction = state.transactionsById[payload.data]
+			transaction.status = 'finalized'
+
+			const transactionsById = {
+				...state.transactionsById,
+				[payload.data] : transaction
+			}
+			return {
+				...state,
+				transactionsById,
+			} 		
+		}
+
+		case 'REMOVE_TRANSACTION': {
+			let { transactionsById } = state
+			delete transactionsById[payload.data]
+
+			transactionsById = {...transactionsById}
+			return {
+				...state,
+				transactionsById,
+			} 		
+		}
+
 		default: {
 			return {...state}
 		}
+
+
 
 	}
 }

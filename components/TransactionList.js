@@ -52,8 +52,8 @@ function getDescription(address,source, source_name, target, target_name,directi
 	return {
 		transactions: props.transactions || Object.keys(transactionsById).map(id => {
 			const {
-				hash,
 				block : { 
+					hash,
 					data: {
 						source_address, target_address, amount, direction
 					}
