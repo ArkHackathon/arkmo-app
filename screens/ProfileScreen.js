@@ -31,6 +31,13 @@ export default class ProfileScreen extends React.Component {
       }}>
         {this.state.myArkAddress && (
           [
+            <Text key = "Username"
+            selectable
+            style={{
+              fontSize: 20
+            }}>
+            {global.username}
+            </Text>,
             <QRCode
               key = "QRCode"
               value = {this.state.myArkAddress}
@@ -38,7 +45,7 @@ export default class ProfileScreen extends React.Component {
               bgColor = 'black'
               fgColor = 'white'/>,
             <Text
-              key = ""
+              key = "Address"
               selectable
               style={{
                 fontSize: 20
