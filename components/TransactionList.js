@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import Transaction from './Transaction'
@@ -42,24 +42,25 @@ function getDescription(address,source,target,direction,ammount,status, otherNam
 }
 
 @connect((state, props) => {
-
 	const {
+		contacts,
 		transactions : {transactionsById}, 
 		user: {address},
-		contacts,
 	} = state
 
-	return Object.keys(transactionsById).map(id => {
-		const {source, target, direction, ammount, status} = transactionsById[id]
-		return {
-			ammount
-			description: getDescription(address,source,target,direction,ammount)
-		}
-	}).filter(tx => tx.description)
+	return {
+		transactions: Object.keys(transactionsById).map(id => {
+			const {source, target, direction, ammount, status} = transactionsById[id]
+			return {
+				ammount,
+				description: getDescription(address,source,target,direction,ammount)
+			}
+		}).filter(tx => tx.description)
+	}
 })
 export default class TransactionList extends Component {
 	render() {
-		const { transactions } = props
+		const { transactions } = this.props
 		return (
 			<View>
 				{transactions.map(({ammount, description}) => (
