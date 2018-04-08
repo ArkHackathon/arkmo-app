@@ -7,3 +7,4 @@ export default store = createStore(
 		transactions: transactionsReducer
 	})
 )
+
