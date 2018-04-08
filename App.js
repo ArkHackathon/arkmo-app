@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
 import { AppLoading, Asset, Font, SecureStore } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
@@ -25,10 +25,10 @@ export default class App extends React.Component {
               onFinish={this._handleFinishLoading}
             />
         ) : (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                 <RootNavigation hasRunBefore={this.state.hasRunBefore} />
-            </View>
+            </SafeAreaView>
         )}
       </Provider>
     )
