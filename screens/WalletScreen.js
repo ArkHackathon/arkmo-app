@@ -15,6 +15,46 @@ import { ArkDisplay } from '../components/ArkDisplay';
 import TransactionList from '../components/TransactionList'
 import { connect } from 'react-redux'
 
+
+function getDescription(address,source, source_name, target, target_name,direction,amount,status, otherName){
+
+  let ret = '';
+  address = 'bob'
+  if(status == 'finalized') {
+    if(target == address) {
+      if(direction == 'forward'){
+        ret = source_name+ ' paid You'
+      } else {
+        ret = source_name + ' charged You'
+      }
+    } else {
+      if(direction == 'forward'){
+        ret = 'You paid ' + target_name
+      } else {
+        ret = 'You charged ' + target_name
+      }
+    }
+  } else if(status == 'pending'){
+    if(target == address){
+      if(direction = 'forward'){
+        ret = source_name + ' is paying You'
+      } else {
+        ret = source_name + ' is charging You'
+      }
+    } else {
+      if(direction = 'forward'){
+        ret = 'You are paying ' + target_name
+      } else {
+        ret = 'You are charging ' + target_name
+      }
+    }
+  } else {
+    return false
+  }
+
+  return ret + ' ' + amount + ' Ark'
+}
+
 @connect((state, props) => {
   const {
     contacts : {contactsById},
@@ -36,7 +76,33 @@ import { connect } from 'react-redux'
         target_username,
       } = transactionsById[id]
 
-      return status == 'pending' && target_address == address && direction == 'forward'
+      return status == 'pending' && target_address == 'bob' && direction == 'forward'
+    }).map((id )=> {
+      const {
+        hash,
+        block : { 
+          data: {
+            source_address, target_address, amount, direction
+          }
+        },
+        status,
+        source_username,
+        target_username,
+      } = transactionsById[id]
+
+      return {
+        description: getDescription(
+          address,
+          source_address,
+          source_username,
+          target_address,
+          target_username,
+          direction,
+          amount,
+          status,
+        ),
+        balance: balanceByHash[transactionsById[id].hash] || 0,
+      }
     })
   }
 })
@@ -60,25 +126,6 @@ export default class WalletScreen extends React.Component {
         </View>
         <ScrollView style={[styles.container]} contentContainerStyle={styles.contentContainer}>
           <TransactionList transactions = {transactions} />
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.paymentsScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/PaymentsScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
       </View>
     );
