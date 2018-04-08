@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font } from 'expo';
+import { AppLoading, Asset, Font, SecureStore } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import { Provider } from 'react-redux'
@@ -11,13 +11,14 @@ import store from './store'
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    hasRunBefore: false
   };
 
   render() {
     return (
       <Provider store = {store} >
         {(!this.state.isLoadingComplete && !this.props.skipLoadingScreen) ? (
-            <AppLoading asdfasdf
+            <AppLoading 
               startAsync={this._loadResourcesAsync}
               onError={this._handleLoadingError}
               onFinish={this._handleFinishLoading}
@@ -25,7 +26,7 @@ export default class App extends React.Component {
         ) : (
             <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <RootNavigation />
+                <RootNavigation hasRunBefore={this.state.hasRunBefore} />
             </View>
         )}
       </Provider>
@@ -33,6 +34,10 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => {
+    let checkFirstRun = SecureStore.getItemAsync('hasRunBefore').then( (val) => {
+      if(val) this.setState({hasRunBefore:true});
+      else return SecureStore.setItemAsync('hasRunBefore','true')
+    });
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -45,6 +50,7 @@ export default class App extends React.Component {
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
+      checkFirstRun
     ]);
   };
 
