@@ -1,0 +1,1 @@
+global.apiUrl = 'http://18.232.132.192/blockchain/';

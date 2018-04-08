@@ -6,6 +6,7 @@ import RootNavigation from './navigation/RootNavigation';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import store from './store'
+import './constants/Global'
 
 
 export default class App extends React.Component {
@@ -38,6 +39,10 @@ export default class App extends React.Component {
       if(val) this.setState({hasRunBefore:true});
       else return SecureStore.setItemAsync('hasRunBefore','true')
     });
+    let setGlobals = Promise.all([
+      SecureStore.getItemAsync('username').then( (val) => { if(val) global.username = val }),
+      SecureStore.getItemAsync('secret').then( (val) => { if(val) global.secret = val })
+    ])
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -50,7 +55,8 @@ export default class App extends React.Component {
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
-      checkFirstRun
+      checkFirstRun,
+      setGlobals
     ]);
   };
 
