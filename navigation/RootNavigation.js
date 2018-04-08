@@ -4,23 +4,15 @@ import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
-
-const RootStackNavigator = StackNavigator(
-  {
-    Main: {
-      screen: MainTabNavigator,
-    },
-  },
-  {
-    navigationOptions: () => ({
-      headerTitleStyle: {
-        fontWeight: 'normal',
-      },
-    }),
-  }
-);
+import WelcomeScreen from '../screens/WelcomeScreen';
 
 export default class RootNavigator extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      firstRun: !props.hasRunBefore
+    }
+  }
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
@@ -30,6 +22,36 @@ export default class RootNavigator extends React.Component {
   }
 
   render() {
+    let screens;
+    if(!this.state.firstRun){
+      screens = {
+        Welcome: {
+          screen: WelcomeScreen
+        },
+        Main: {
+          screen: MainTabNavigator
+        }
+      }
+    } else {
+      screens = {
+        Main: {
+          screen: MainTabNavigator
+        },
+        Welcome: {
+          screen: WelcomeScreen
+        }
+      }
+    }
+    const RootStackNavigator = StackNavigator(
+      screens,
+      {
+        navigationOptions: () => ({
+          headerTitleStyle: {
+            fontWeight: 'normal',
+          },
+        }),
+      }
+    );
     return <RootStackNavigator />;
   }
 

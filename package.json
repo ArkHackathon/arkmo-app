@@ -10,6 +10,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "arkjs": "^0.2.1",
+    "axios": "^0.18.0",
     "eslint": "^4.19.1",
     "expo": "26.0.0",
     "moment": "^2.22.0",
