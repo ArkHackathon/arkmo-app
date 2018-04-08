@@ -19,11 +19,18 @@ var rejectBtn = [
 	}
 ]
 
+var revokeBtn = [
+	{
+		text: 'Revoke',
+		backgroundColor:'red'
+	}
+]
+
 
 // Swipeout component
 
-export default ({description, balance}) => (
-	<Swipeout buttonWidth = {100} left = {acceptBtn} right={rejectBtn}>
+export default ({description, balance, status, address, target_address, direction}) => {
+	const inner = (
 		<View style={{flex: 1, flexDirection: 'row', padding:20}}>
 		  <View style={{flex: 3}}>
 		    <Text>{description}</Text>
@@ -32,5 +39,23 @@ export default ({description, balance}) => (
 		    <Text style={{backgroundColor: 'skyblue',textAlign: 'right'}}>{balance}</Text>
 		  </View>
 		</View>
-	</Swipeout>
-)
+	)
+
+	return (
+		<View>
+		{ status == 'pending'? (
+			'bob' == target_address? (
+				<Swipeout buttonWidth = {100} left = {acceptBtn} right={rejectBtn}>
+					{[inner]}
+				</Swipeout>
+			) : (
+				<Swipeout buttonWidth = {100} right={revokeBtn}>
+					{[inner]}
+				</Swipeout>
+			)
+		) : (
+			[inner]
+		)}
+		</View>
+	)
+}

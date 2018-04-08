@@ -6,7 +6,8 @@ import Transaction from './Transaction'
 function getDescription(address,source, source_name, target, target_name,direction,amount,status, otherName){
 
 	let ret = '';
-
+	address = 'bob'
+  	console.warn(address,target)
 	if(status == 'finalized') {
 		if(target == address) {
 			if(direction == 'forward'){
@@ -23,13 +24,13 @@ function getDescription(address,source, source_name, target, target_name,directi
 		}
 	} else if(status == 'pending'){
 		if(target == address){
-			if(direction = 'forward'){
+			if(direction == 'forward'){
 				ret = source_name + ' is paying You'
 			} else {
 				ret = source_name + ' is charging You'
 			}
 		} else {
-			if(direction = 'forward'){
+			if(direction == 'forward'){
 				ret = 'You are paying ' + target_name
 			} else {
 				ret = 'You are charging ' + target_name
@@ -73,7 +74,10 @@ function getDescription(address,source, source_name, target, target_name,directi
 					amount,
 					status,
 				),
-				balance: balanceByHash[hash]
+				balance: balanceByHash[hash],
+				status,
+				address,
+				target_address,
 			}
 		}).filter(tx => tx.description),
 	}
@@ -84,11 +88,16 @@ export default class TransactionList extends Component {
 		const { transactions } = this.props
 		return (
 			<View>
-				{transactions.map(({description, balance}, i) => (
+				{transactions.map(({description, balance, status,address, target_address, direction}, i) => (
 					<View  key = {i} style= {{marginBottom:10}}>
 						<Transaction 
 							description= {description}
 							balance = {balance}
+
+							status = {status}
+							address = {address}
+							target_address = {target_address}
+							direction = {direction}
 						/>
 				      <View style={{
 				        flex: 1,

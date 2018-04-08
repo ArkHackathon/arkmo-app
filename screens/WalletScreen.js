@@ -20,6 +20,7 @@ function getDescription(address,source, source_name, target, target_name,directi
 
   let ret = '';
   address = 'bob'
+  console.warn(address,target)
   if(status == 'finalized') {
     if(target == address) {
       if(direction == 'forward'){
@@ -36,13 +37,13 @@ function getDescription(address,source, source_name, target, target_name,directi
     }
   } else if(status == 'pending'){
     if(target == address){
-      if(direction = 'forward'){
+      if(direction == 'forward'){
         ret = source_name + ' is paying You'
       } else {
         ret = source_name + ' is charging You'
       }
     } else {
-      if(direction = 'forward'){
+      if(direction == 'forward'){
         ret = 'You are paying ' + target_name
       } else {
         ret = 'You are charging ' + target_name
@@ -102,6 +103,9 @@ function getDescription(address,source, source_name, target, target_name,directi
           status,
         ),
         balance: balanceByHash[transactionsById[id].hash] || 0,
+        status,
+        address,
+        target_address,
       }
     })
   }
