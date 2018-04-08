@@ -84,8 +84,8 @@ export default class TransactionList extends Component {
 		const { transactions } = this.props
 		return (
 			<View>
-				{transactions.map(({description, balance}) => (
-					<View  style= {{marginBottom:10}}>
+				{transactions.map(({description, balance}, i) => (
+					<View  key = {i} style= {{marginBottom:10}}>
 						<Transaction 
 							description= {description}
 							balance = {balance}
@@ -96,7 +96,7 @@ export default class TransactionList extends Component {
 				        justifyContent: 'center',
 				        alignItems: 'center',
 				      }}>
-				        <View style={{width: '90%', height:1,borderBottomColor:'skyblue',borderBottomWidth:1}} />
+				        <View style={{width: '100%', height:1,borderBottomColor:'skyblue',borderBottomWidth:1}} />
 				      </View>
 					</View>
 				))}
