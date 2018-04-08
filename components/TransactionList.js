@@ -6,6 +6,7 @@ import Transaction from './Transaction'
 function getDescription(address,source, source_name, target, target_name,direction,amount,status, otherName){
 
 	let ret = '';
+
 	if(status == 'finalized') {
 		if(target == address) {
 			if(direction == 'forward'){
@@ -42,15 +43,16 @@ function getDescription(address,source, source_name, target, target_name,directi
 }
 
 @connect((state, props) => {
-	const {
-		contacts,
-		transactions : {transactionsById}, 
-		user: {address},
-	} = state
 
+	const {
+		contacts : {contactsById},
+		transactions : {transactionsById}, 
+		user: {address,balanceByHash},
+	} = state
 	return {
 		transactions: Object.keys(transactionsById).map(id => {
 			const {
+				hash,
 				block : { 
 					data: {
 						source_address, target_address, amount, direction
@@ -70,20 +72,23 @@ function getDescription(address,source, source_name, target, target_name,directi
 					direction,
 					amount,
 					status,
-				)
+				),
+				balance: balanceByHash[hash]
 			}
 		}).filter(tx => tx.description)
 	}
 })
+
 export default class TransactionList extends Component {
 	render() {
 		const { transactions } = this.props
 		return (
 			<View>
-				{transactions.map(({description}) => (
+				{transactions.map(({description, balance}) => (
 					<View  style= {{marginBottom:10}}>
 						<Transaction 
 							description= {description}
+							balance = {balance}
 						/>
 				      <View style={{
 				        flex: 1,

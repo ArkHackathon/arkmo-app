@@ -13,26 +13,25 @@ import { WebBrowser } from 'expo';
 import TransactionList from '../components/TransactionList'
 
 import { MonoText } from '../components/StyledText';
+import { connect } from 'react-redux'
+import moment from 'moment'
 
+@connect((state, props) => ({
+    lastTransaction :moment(state.user.lastTransactionTime).toNow(true)
+}))
 export default class RequestsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
   render() {
+    let {lastTransaction} = this.props
+    lastTransaction= lastTransaction.charAt(0).toUpperCase() + lastTransaction.substr(1);
+    lastTransaction = lastTransaction + " since last the transaction"
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
+          <Text style = {{ textAlign: "center"}}>{lastTransaction}</Text>
         <TransactionList />
         </ScrollView>
 
