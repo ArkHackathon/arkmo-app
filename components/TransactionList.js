@@ -1,71 +1,99 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View , Text} from 'react-native'
 import Transaction from './Transaction'
 
-function getDescription(address,source,target,direction,ammount,status, otherName){
+function getDescription(address,source, source_name, target, target_name,direction,amount,status, otherName){
 
 	let ret = '';
 	if(status == 'finalized') {
 		if(target == address) {
 			if(direction == 'forward'){
-				ret = otherName+ ' paid You'
+				ret = source_name+ ' paid You'
 			} else {
-				ret = otherName + ' charged You'
+				ret = source_name + ' charged You'
 			}
 		} else {
 			if(direction == 'forward'){
-				ret = 'You paid ' + otherName
+				ret = 'You paid ' + target_name
 			} else {
-				ret = 'You charged ' + otherName
+				ret = 'You charged ' + target_name
 			}
 		}
 	} else if(status == 'pending'){
 		if(target == address){
 			if(direction = 'forward'){
-				ret = otherName + ' is paying You'
+				ret = target_name + ' is paying You'
 			} else {
-				ret = otherName + ' is charging You'
+				ret = target_name + ' is charging You'
 			}
 		} else {
 			if(direction = 'forward'){
-				ret = 'You are paying ' + otherName
+				ret = 'You are paying ' + target_name
 			} else {
-				ret = 'You are charging ' + otherName
+				ret = 'You are charging ' + target_name
 			}
 		}
 	} else {
 		return false
 	}
 
-	return ret + ' ' + ammount + ' Ark'
+	return ret + ' ' + amount + ' Ark'
 }
 
 @connect((state, props) => {
-
 	const {
+		contacts,
 		transactions : {transactionsById}, 
 		user: {address},
-		contacts,
 	} = state
 
-	return Object.keys(transactionsById).map(id => {
-		const {source, target, direction, ammount, status} = transactionsById[id]
-		return {
-			ammount
-			description: getDescription(address,source,target,direction,ammount)
-		}
-	}).filter(tx => tx.description)
+	return {
+		transactions: Object.keys(transactionsById).map(id => {
+			const {
+				block : { 
+					data: {
+						source_address, target_address, amount, direction
+					}
+				},
+				status,
+				source_username,
+				target_username,
+			} = transactionsById[id]
+			return {
+				description: getDescription(
+					address,
+					source_address,
+					source_username,
+					target_address,
+					target_username,
+					direction,
+					amount,
+					status,
+				)
+			}
+		}).filter(tx => tx.description)
+	}
 })
 export default class TransactionList extends Component {
 	render() {
-		const { transactions } = props
+		const { transactions } = this.props
 		return (
 			<View>
-				{transactions.map(({ammount, description}) => (
-					<Transaction 
-						description= {verb}
-					/>
+				{transactions.map(({description}) => (
+					<View  style= {{marginBottom:10}}>
+						<Transaction 
+							description= {description}
+						/>
+				      <View style={{
+				        flex: 1,
+				        flexDirection: 'column',
+				        justifyContent: 'center',
+				        alignItems: 'center',
+				      }}>
+				        <View style={{width: '100%', height:1,borderBottomColor:'black',borderBottomWidth:1}} />
+				      </View>
+					</View>
 				))}
 			</View>
 		)

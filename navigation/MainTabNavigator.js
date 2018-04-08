@@ -6,7 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import WalletScreen from '../screens/WalletScreen';
-import RequestsScreen from '../screens/RequestsScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -15,8 +15,8 @@ export default TabNavigator(
     Wallet: {
       screen: WalletScreen,
     },
-    Requests: {
-      screen: RequestsScreen,
+    History: {
+      screen: HistoryScreen,
     },
     Contacts: {
       screen: ContactsScreen,
@@ -37,7 +37,7 @@ export default TabNavigator(
                 ? `ios-cash${focused ? '' : '-outline'}`
                 : 'md-cash';
             break;
-          case 'Requests':
+          case 'History':
           iconName = Platform.OS === 'ios' ? `ios-cloud-upload${focused ? '' : '-outline'}` : 'md-cloud-upload';
             break;
           case 'Contacts':
