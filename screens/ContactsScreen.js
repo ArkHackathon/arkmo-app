@@ -1,39 +1,29 @@
 import React from 'react';
-import { ScrollView, StyleSheet, FlatList, Platform, Button, TouchableHighlight } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
-export default class ContactsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
-        title: 'Contacts',
-        headerRight: <TouchableHighlight underlayColor='white' onPress={() => console.log("HOORAY")}>
-        <Ionicons
-        name={Platform.OS === 'ios'? 'ios-add' : 'md-add'}
-        size={28}
-        style={{ marginBottom: -3, width: 25 }}
-      />
-      </TouchableHighlight>
-    };
-};
+import ListContactsScreen from './ListContactsScreen';
+import AddContactScreen from './AddContactScreen';
+import { StackNavigator } from 'react-navigation';
+import CreateContactScreen from './CreateContactScreen';
+
+const ContactsStackNavigator = StackNavigator(
+  {
+    ListContacts: {
+      screen: ListContactsScreen
+    },
+    AddContact: {
+      screen: AddContactScreen
+    },
+    CreateContact: {
+      screen: CreateContactScreen
+    }
+  },
+)
+
+export default class RootNavigator extends React.Component {
+  static navigationOptions = {
+    header: null
+  };
 
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <FlatList data={[{key: 'asdfjkl;', name: 'John Doe', address: 'asdfjkl;'}, {key: 'qweruiop', name: 'Jane Doe', address: 'qweruiop'}]}
-        renderItem={({item}) => <ListItem title={item.name} subtitle={item.address} />}
-        />
-      </ScrollView>
-    );
+    return <ContactsStackNavigator />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
