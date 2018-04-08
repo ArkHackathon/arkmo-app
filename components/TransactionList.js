@@ -7,7 +7,6 @@ function getDescription(address,source, source_name, target, target_name,directi
 
 	let ret = '';
 	address = 'bob'
-  	console.warn(address,target)
 	if(status == 'finalized') {
 		if(target == address) {
 			if(direction == 'forward'){
