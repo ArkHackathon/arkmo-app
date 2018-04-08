@@ -2,7 +2,7 @@ const defaultState = {
 	contactsById : {},
 }
 
-export default function contactsReducer(state, {type, payload}){
+export default function contactsReducer(state = defaultState, {type, payload}){
 	switch(type){
 		case 'ADD_CONTACT': {
 
@@ -10,7 +10,6 @@ export default function contactsReducer(state, {type, payload}){
 			const contactsById = {...state.contactsById}
 
 			contactsById[id] = data
-			contactsById
 			return {
 				...state,
 				contactsById
