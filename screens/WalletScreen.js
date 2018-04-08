@@ -105,6 +105,7 @@ function getDescription(address,source, source_name, target, target_name,directi
         status,
         address,
         target_address,
+        hash,
       }
     })
   }

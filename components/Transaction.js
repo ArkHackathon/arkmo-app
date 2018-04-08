@@ -5,31 +5,37 @@ import { MonoText } from '../components/StyledText';
 
 import Swipeout from 'react-native-swipeout';
 // Buttons
-var acceptBtn = [
-  {
-    text: 'Accept',
-    backgroundColor:'green'
-  }
-]
-
-var rejectBtn = [
-	{
-		text: 'Reject',
-		backgroundColor:'red'
-	}
-]
-
-var revokeBtn = [
-	{
-		text: 'Revoke',
-		backgroundColor:'red'
-	}
-]
-
 
 // Swipeout component
 
 export default ({description, balance, status, address, target_address, direction}) => {
+
+	const finalize = (address, hash) => {console.warn('clicked finalize')}
+	const reject = (address, hash) => {console.warn('clicked reject')}
+	var acceptBtn = [
+	  {
+	    text: 'Accept',
+	    backgroundColor:'green',
+	    onPress: finalize
+	  }
+	]
+
+	var rejectBtn = [
+		{
+			text: 'Reject',
+			backgroundColor:'red',
+			onPress: finalize,
+		}
+	]
+
+	var revokeBtn = [
+		{
+			text: 'Revoke',
+			backgroundColor:'red',
+			onPress: reject,
+		}
+	]
+
 	const inner = (
 		<View style={{flex: 1, flexDirection: 'row', padding:20}}>
 		  <View style={{flex: 3}}>
