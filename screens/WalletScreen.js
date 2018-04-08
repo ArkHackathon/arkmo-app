@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Button, ButtonGroup } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -133,6 +134,13 @@ export default class WalletScreen extends React.Component {
         <ScrollView style={[styles.container]} contentContainerStyle={styles.contentContainer}>
           <TransactionList transactions = {transactions} />
         </ScrollView>
+        <View>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          buttons={[<Button title='one' buttonStyle={{width:150, backgroundColor:'green'}} onPress={()=>{}} />,<Button title='two' buttonStyle={{width:150, backgroundColor:'blue'}} onPress={()=>{}} />]}
+          
+        />
+        </View>
       </View>
     );
   }
