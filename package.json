@@ -18,7 +18,8 @@
     "react-native-qrcode": "^0.2.6",
     "react-navigation": "1.5.10",
     "react-redux": "^5.0.7",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-orm": "^0.9.4"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^16.1.0",

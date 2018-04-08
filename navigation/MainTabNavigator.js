@@ -5,15 +5,15 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import PaymentsScreen from '../screens/PaymentsScreen';
+import WalletScreen from '../screens/WalletScreen';
 import RequestsScreen from '../screens/RequestsScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 export default TabNavigator(
   {
-    Payments: {
-      screen: PaymentsScreen,
+    Wallet: {
+      screen: WalletScreen,
     },
     Requests: {
       screen: RequestsScreen,
@@ -31,7 +31,7 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Payments':
+          case 'Wallet':
             iconName =
               Platform.OS === 'ios'
                 ? `ios-cash${focused ? '' : '-outline'}`
