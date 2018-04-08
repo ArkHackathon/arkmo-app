@@ -23,7 +23,7 @@ export default class RootNavigator extends React.Component {
 
   render() {
     let screens;
-    if(!this.state.firstRun){
+    if(this.state.firstRun){
       screens = {
         Welcome: {
           screen: WelcomeScreen
