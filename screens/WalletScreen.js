@@ -12,11 +12,33 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 import { ArkDisplay } from '../components/ArkDisplay';
+import TransactionList from '../components/TransactionList'
 
-export default class WalletScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+@connect((state, props) => {
+  const {
+    contacts : {contactsById},
+    transactions : {transactionsById}, 
+    user: {address,balanceByHash},
+  } = state
+
+  return {
+    transactions: Object.keys(transactionsById).filter(id => {
+      const {
+        hash,
+        block : { 
+          data: {
+            source_address, target_address, amount, direction
+          }
+        },
+        status,
+        source_username,
+        target_username,
+      } = transactionsById[id]
+
+      return status == 'pending' && target_address == address && direction == 'forward'
+    })
+  }
+})
 
   constructor(props){
     super(props);
@@ -26,23 +48,14 @@ export default class WalletScreen extends React.Component {
   }
 
   render() {
+    const { transactions } = this.props
     return (
       <View style={styles.container}>
         <View>
           <ArkDisplay value={this.state.arkAmount}></ArkDisplay>
         </View>
         <ScrollView style={[styles.container]} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
+          <TransactionList transactions = {transactions} />
           <View style={styles.getStartedContainer}>
             {this._maybeRenderDevelopmentModeWarning()}
 

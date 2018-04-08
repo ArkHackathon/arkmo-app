@@ -75,7 +75,8 @@ function getDescription(address,source, source_name, target, target_name,directi
 				),
 				balance: balanceByHash[hash]
 			}
-		}).filter(tx => tx.description)
+		}).filter(tx => tx.description),
+		...props
 	}
 })
 
